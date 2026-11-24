@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Data Kepemilikan Android Murid — SMP Negeri 6 Manokwari</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans untuk keterbacaan optimal di layar HP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Palet Cerah, Bersih, Responsif Penuh & Nyaman di Mata */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: #F2F7FD;
+            color: #0F172A;
+            -webkit-tap-highlight-color: transparent;
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .card-bright {
+            background: #FFFFFF;
+            box-shadow: 0 4px 20px -4px rgba(14, 116, 144, 0.08), 0 1px 3px 0 rgba(15, 23, 42, 0.04);
+            border: 1px solid #E0ECFA;
+        }
+
+        /* Menghilangkan panah bawaan input number agar tombol +/- terlihat bersih */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        /* Animasi Halaman Awal Selamat Datang (Bergerak Masuk Secara Lambat & Mewah) */
+        @keyframes slowDrift {
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(18px, -20px, 0) scale(1.06);
+            }
+            100% {
+                transform: translate3d(-14px, 14px, 0) scale(0.98);
+            }
+        }
+
+        @keyframes slowEntranceDown {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, -28px, 0) scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+
+        @keyframes slowEntranceUp {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 34px, 0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @keyframes subtleGoldPulse {
+            0%, 100% {
+                box-shadow: 0 12px 35px -8px rgba(217, 119, 6, 0.25), 0 0 0 1px rgba(251, 191, 36, 0.45);
+            }
+            50% {
+                box-shadow: 0 18px 45px -6px rgba(14, 165, 233, 0.28), 0 0 0 4px rgba(251, 191, 36, 0.25);
+            }
+        }
+
+        .welcome-orb-1 {
+            animation: slowDrift 14s ease-in-out infinite alternate;
+        }
+
+        .welcome-orb-2 {
+            animation: slowDrift 18s ease-in-out infinite alternate-reverse;
+        }
+
+        .welcome-anim-logo {
+            opacity: 0;
+            animation: slowEntranceDown 1.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+        }
+
+        .welcome-anim-badge {
+            opacity: 0;
+            animation: slowEntranceUp 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+        }
+
+        .welcome-anim-title {
+            opacity: 0;
+            animation: slowEntranceUp 1.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+        }
+
+        .welcome-anim-desc {
+            opacity: 0;
+            animation: slowEntranceUp 1.7s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
+        }
+
+        .welcome-anim-btn {
+            opacity: 0;
+            animation: slowEntranceUp 1.7s cubic-bezier(0.16, 1, 0.3, 1) 1.35s forwards;
+        }
+
+        .welcome-crest-glow {
+            animation: subtleGoldPulse 5s ease-in-out infinite;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: #FFFFFF !important;
+            }
+            .card-bright {
+                box-shadow: none !important;
+                border: 1px solid #CBD5E1 !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-[100dvh] flex flex-col antialiased selection:bg-sky-500/20 selection:text-sky-900 overflow-x-hidden">
+
+    <!-- =====================================================================
+         HALAMAN AWAL SELAMAT DATANG (MEWAH & BERANIMASI MASUK PERLAHAN)
+    ====================================================================== -->
+    <div id="welcomeScreen" class="fixed inset-0 min-h-[100dvh] z-[70] flex items-center justify-center p-3.5 sm:p-6 overflow-y-auto transition-all duration-1000 ease-out no-print" style="background: radial-gradient(circle at 18% 15%, #E0F2FE 0%, #F8FAFC 46%, #FEF3C7 100%);">
+        <!-- Ornamen Cahaya Lembut Bergerak Lambat -->
+        <div class="pointer-events-none fixed inset-0 overflow-hidden">
+            <div class="welcome-orb-1 absolute -top-20 -left-20 w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-sky-300/30 blur-3xl"></div>
+            <div class="welcome-orb-2 absolute -bottom-24 -right-16 w-80 h-80 sm:w-[28rem] sm:h-[28rem] rounded-full bg-amber-300/30 blur-3xl"></div>
+        </div>
+
+        <!-- Kartu Utama Selamat Datang -->
+        <div class="relative z-10 max-w-xl w-full bg-white/85 backdrop-blur-xl rounded-[1.75rem] sm:rounded-[2rem] border border-amber-200/80 shadow-[0_24px_60px_-15px_rgba(15,23,42,0.14)] p-5 sm:p-9 md:p-10 text-center my-auto">
+            <!-- Garis Aksen Emas & Biru Langit di Puncak Kartu -->
+            <div class="w-20 sm:w-24 h-1.5 mx-auto mb-4 sm:mb-6 rounded-full bg-gradient-to-r from-sky-500 via-amber-400 to-sky-500"></div>
+
+            <!-- 1. Logo Resmi Sekolah -->
+            <div class="welcome-anim-logo mb-4 sm:mb-5 flex justify-center">
+                <div class="welcome-crest-glow w-20 h-20 sm:w-28 sm:h-28 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white to-sky-50/90 border-2 border-amber-300/80 p-2 sm:p-2.5 flex items-center justify-center">
+                    <img
+                        src="https://i.ibb.co.com/JWy6dhzM/LOGO-SMP6-1-removebg-preview.png"
+                        alt="Logo SMP Negeri 6 Manokwari"
+                        onerror="this.onerror=null; this.src='https://placehold.co/140x140/0284c7/ffffff?text=SMPN+6';"
+                        class="w-full h-full object-contain"
+                    >
+                </div>
+            </div>
+
+            <!-- 2. Lencana Identitas Sekolah -->
+            <div class="welcome-anim-badge mb-2.5 sm:mb-3">
+                <span class="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50 border border-amber-300/80 text-amber-900 text-[10px] sm:text-xs font-extrabold tracking-widest uppercase shadow-2xs">
+                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500"></span>
+                    <span>SMP Negeri 6 Manokwari</span>
+                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500"></span>
+                </span>
+            </div>
+
+            <!-- 3. Ucapan Selamat Datang & Judul Aplikasi -->
+            <div class="welcome-anim-title space-y-1.5 sm:space-y-2">
+                <p class="text-xs sm:text-base font-bold tracking-wide text-sky-700 uppercase">
+                    Selamat Datang
+                </p>
+                <h1 class="text-xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    Data Kepemilikan
+                    <span class="block bg-gradient-to-r from-sky-700 via-blue-700 to-amber-600 bg-clip-text text-transparent mt-0.5">
+                        Android Murid
+                    </span>
+                </h1>
+            </div>
+
+            <!-- 4. Deskripsi Singkat & Dekorasi Pembatas -->
+            <div class="welcome-anim-desc mt-3 sm:mt-4 mb-5 sm:mb-7 space-y-3 sm:space-y-4">
+                <div class="flex items-center justify-center gap-2">
+                    <span class="h-px w-10 sm:w-12 bg-gradient-to-r from-transparent to-amber-400"></span>
+                    <span class="w-2 h-2 rotate-45 bg-amber-400"></span>
+                    <span class="h-px w-10 sm:w-12 bg-gradient-to-l from-transparent to-amber-400"></span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                    Sistem pendataan digital yang mudah dan cepat bagi <strong>Wali Kelas</strong> untuk melaporkan kepemilikan perangkat Android murid serta rekapitulasi otomatis sekolah.
+                </p>
+            </div>
+
+            <!-- 5. Tombol Masuk ke Aplikasi -->
+            <div class="welcome-anim-btn">
+                <button type="button" onclick="enterMainApp()" class="group w-full sm:w-auto min-w-[220px] sm:min-w-[240px] min-h-[50px] sm:min-h-[54px] px-6 sm:px-8 py-3 sm:py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 via-blue-600 to-sky-700 hover:from-sky-700 hover:to-blue-800 active:scale-[0.98] text-white font-extrabold text-sm sm:text-base shadow-lg shadow-sky-600/25 border border-sky-400/30 inline-flex items-center justify-center gap-2.5 transition-all cursor-pointer">
+                    <span>Masuk ke Aplikasi</span>
+                    <svg class="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Status Mode Admin (Hanya muncul saat Admin login) -->
+    <div id="adminBanner" class="hidden bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 text-slate-900 px-3.5 sm:px-6 py-2.5 shadow-sm sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-bold">
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="inline-flex h-2.5 w-2.5 rounded-full bg-slate-900 animate-ping shrink-0"></span>
+                <span class="truncate">MODE ADMIN AKTIF — Kelola kelas, edit data, unduh Excel &amp; cetak laporan.</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" onclick="openManageClassesModal()" class="inline-flex items-center gap-1.5 bg-sky-700 text-white hover:bg-sky-800 px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    <span>Kelola Kelas</span>
+                </button>
+                <button type="button" onclick="exportToCSV()" class="inline-flex items-center gap-1.5 bg-emerald-700 text-white hover:bg-emerald-800 px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span>Unduh Excel</span>
+                </button>
+                <button type="button" onclick="window.print()" class="inline-flex items-center gap-1.5 bg-white text-slate-900 hover:bg-slate-100 px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <polyline points="6 9 6 2 18 2 18 9"/>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                        <rect x="6" y="14" width="12" height="8"/>
+                    </svg>
+                    <span>Cetak</span>
+                </button>
+                <button type="button" onclick="logoutAdmin()" class="bg-slate-900 text-white hover:bg-slate-800 px-3 py-1 rounded-lg text-xs font-semibold transition cursor-pointer">
+                    Keluar Admin
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Cerah dengan Logo Resmi Sekolah -->
+    <header class="bg-white border-b border-sky-100 shadow-xs relative">
+        <!-- Garis Aksen Cerah di Paling Atas -->
+        <div class="h-1.5 w-full bg-gradient-to-r from-sky-500 via-blue-500 to-emerald-500"></div>
+
+        <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3.5 sm:py-5">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3.5 sm:gap-4">
+                <!-- Logo & Identitas Aplikasi -->
+                <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-sky-50/80 border border-sky-100 p-1.5 flex items-center justify-center shrink-0 shadow-xs">
+                        <img
+                            src="https://i.ibb.co.com/JWy6dhzM/LOGO-SMP6-1-removebg-preview.png"
+                            alt="Logo SMP Negeri 6 Manokwari"
+                            onerror="this.onerror=null; this.src='https://placehold.co/120x120/0284c7/ffffff?text=SMPN+6';"
+                            class="w-full h-full object-contain"
+                        >
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200/80 text-[10px] sm:text-[11px] font-bold tracking-wide uppercase">
+                            SMP Negeri 6 Manokwari
+                        </span>
+                        <h1 class="text-base sm:text-xl lg:text-2xl font-extrabold text-slate-900 tracking-tight leading-snug mt-0.5 sm:mt-1 break-words">
+                            Data Kepemilikan Android Murid
+                        </h1>
+                        <p class="text-slate-500 text-xs sm:text-sm truncate">
+                            Pendataan Mudah Wali Kelas &amp; Rekap Otomatis Sekolah
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Status Koneksi & Tombol Admin -->
+                <div class="flex items-center justify-between md:justify-end gap-2.5 pt-2.5 md:pt-0 border-t border-slate-100 md:border-none shrink-0 no-print">
+                    <div id="syncBadge" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200/70 text-xs font-semibold text-emerald-700">
+                        <span id="syncDot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span id="syncText">Terhubung Live</span>
+                    </div>
+
+                    <button type="button" id="adminToggleBtn" onclick="openAdminModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-sky-600 hover:text-white text-slate-700 border border-slate-200 text-xs font-bold transition-all cursor-pointer">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <span id="adminBtnLabel">Login Admin</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Konten Utama (Otomatis Menyesuaikan Layar HP Android & Laptop) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-7">
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-7 items-start">
+
+            <!-- ===============================================================
+                 1. FORMULIR PENGISIAN WALI KELAS (ATAS DI HP, STICKY DI LAPTOP)
+            ================================================================ -->
+            <section class="lg:col-span-5 min-w-0 lg:sticky lg:top-6 card-bright rounded-3xl overflow-hidden border-2 border-sky-200/80 no-print">
+                <div class="bg-gradient-to-r from-sky-600 to-blue-600 px-4 sm:px-5 py-3.5 sm:py-4 text-white">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="min-w-0">
+                            <h2 class="text-base sm:text-lg font-extrabold flex items-center gap-2">
+                                <span>Isi Data Wali Kelas</span>
+                            </h2>
+                            <p class="text-xs text-sky-100 mt-0.5">Silakan pilih kelas &amp; isi jumlah murid di bawah ini</p>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-lg bg-white/15 text-[10px] sm:text-[11px] font-bold shrink-0">
+                            4 Langkah Mudah
+                        </span>
+                    </div>
+                </div>
+
+                <form id="waliKelasForm" class="p-4 sm:p-5 space-y-3.5 sm:space-y-4" onsubmit="handleFormSubmit(event)">
+                    <!-- Langkah 1: Pilih Kelas -->
+                    <div>
+                        <label for="selectKelas" class="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-800 mb-1.5">
+                            <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs font-extrabold flex items-center justify-center shrink-0">1</span>
+                            <span>Pilih Kelas Anda <span class="text-rose-500">*</span></span>
+                        </label>
+                        <div class="relative">
+                            <select id="selectKelas" required onchange="handleKelasSelectionChange()" class="w-full min-h-[48px] sm:min-h-[50px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-2xl border-2 border-sky-200 bg-sky-50/40 focus:bg-white focus:border-sky-600 text-base font-bold text-slate-900 transition outline-none appearance-none cursor-pointer">
+                                <option value="">-- Ketuk untuk Memilih Kelas --</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 sm:px-4 text-sky-700">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Info jika kelas sudah diisi & terkunci -->
+                        <div id="lockedClassNotice" class="hidden mt-2.5 p-3 sm:p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs leading-relaxed">
+                            <p class="font-bold flex items-center gap-1.5">
+                                <svg class="w-4 h-4 text-amber-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <span>Data Kelas Ini Sudah Terisi &amp; Terkunci</span>
+                            </p>
+                            <p class="mt-1 text-amber-800">Untuk mencegah perubahan tidak sengaja, data yang sudah masuk hanya dapat diubah oleh <strong>Admin Sekolah</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Langkah 2: Nama Wali Kelas -->
+                    <div>
+                        <label for="inputWaliKelas" class="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-800 mb-1.5">
+                            <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs font-extrabold flex items-center justify-center shrink-0">2</span>
+                            <span>Nama Wali Kelas <span class="text-rose-500">*</span></span>
+                        </label>
+                        <input type="text" id="inputWaliKelas" required placeholder="Ketik nama lengkap wali kelas..." class="w-full min-h-[48px] sm:min-h-[50px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-2xl border border-slate-300 bg-slate-50/60 focus:bg-white focus:border-sky-600 text-base font-semibold text-slate-900 placeholder:text-slate-400 transition outline-none">
+                    </div>
+
+                    <!-- Langkah 3: Jumlah Murid Mempunyai HP -->
+                    <div class="p-3 sm:p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+                        <label for="inputPunyaHp" class="flex items-center gap-2 text-xs sm:text-sm font-bold text-emerald-900 mb-2">
+                            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-xs font-extrabold flex items-center justify-center shrink-0">3</span>
+                            <span>Murid Mempunyai HP Android</span>
+                        </label>
+                        <div class="flex items-center gap-2 sm:gap-2.5">
+                            <button type="button" onclick="adjustNumber('inputPunyaHp', -1)" aria-label="Kurangi punya HP" class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white hover:bg-emerald-100 active:scale-95 text-emerald-800 font-extrabold text-2xl flex items-center justify-center border border-emerald-200 shadow-2xs transition cursor-pointer shrink-0">
+                                −
+                            </button>
+                            <input type="number" id="inputPunyaHp" min="0" max="100" value="0" required oninput="updateLiveFormPreview()" class="w-full min-w-0 h-11 sm:h-12 px-2 sm:px-3 rounded-xl border-2 border-emerald-300 bg-white focus:border-emerald-600 text-center text-xl font-extrabold text-emerald-700 transition outline-none">
+                            <button type="button" onclick="adjustNumber('inputPunyaHp', 1)" aria-label="Tambah punya HP" class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold text-2xl flex items-center justify-center shadow-2xs transition cursor-pointer shrink-0">
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Langkah 4: Jumlah Murid Tidak Mempunyai HP -->
+                    <div class="p-3 sm:p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
+                        <label for="inputTidakPunyaHp" class="flex items-center gap-2 text-xs sm:text-sm font-bold text-amber-900 mb-2">
+                            <span class="w-5 h-5 rounded-full bg-amber-500 text-white text-xs font-extrabold flex items-center justify-center shrink-0">4</span>
+                            <span>Murid Tidak Mempunyai HP</span>
+                        </label>
+                        <div class="flex items-center gap-2 sm:gap-2.5">
+                            <button type="button" onclick="adjustNumber('inputTidakPunyaHp', -1)" aria-label="Kurangi tidak punya HP" class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white hover:bg-amber-100 active:scale-95 text-amber-800 font-extrabold text-2xl flex items-center justify-center border border-amber-200 shadow-2xs transition cursor-pointer shrink-0">
+                                −
+                            </button>
+                            <input type="number" id="inputTidakPunyaHp" min="0" max="100" value="0" required oninput="updateLiveFormPreview()" class="w-full min-w-0 h-11 sm:h-12 px-2 sm:px-3 rounded-xl border-2 border-amber-300 bg-white focus:border-amber-500 text-center text-xl font-extrabold text-amber-700 transition outline-none">
+                            <button type="button" onclick="adjustNumber('inputTidakPunyaHp', 1)" aria-label="Tambah tidak punya HP" class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-extrabold text-2xl flex items-center justify-center shadow-2xs transition cursor-pointer shrink-0">
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Ringkasan Otomatis Sebelum Dikirim -->
+                    <div class="px-3.5 sm:px-4 py-3 rounded-2xl bg-sky-50 border border-sky-200/80 flex items-center justify-between gap-2">
+                        <div class="min-w-0">
+                            <span class="text-xs font-semibold text-slate-600 block">Total Murid Kelas Ini:</span>
+                            <span id="previewRasioHp" class="text-[11px] font-bold text-emerald-700">0% Mempunyai HP</span>
+                        </div>
+                        <span id="previewTotalSiswa" class="text-base sm:text-lg font-extrabold text-sky-800 shrink-0">0 Siswa</span>
+                    </div>
+
+                    <!-- Tombol Kirim & Simpan -->
+                    <button type="submit" id="submitBtn" class="w-full min-h-[50px] sm:min-h-[54px] px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 active:scale-[0.99] text-white font-extrabold text-sm sm:text-base shadow-md shadow-sky-600/20 flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <span id="submitBtnText">Simpan &amp; Rekap Data Kelas</span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- ===============================================================
+                 2. RINGKASAN OTOMATIS & DAFTAR REKAPITULASI PUBLIK
+            ================================================================ -->
+            <div class="lg:col-span-7 min-w-0 space-y-5 sm:space-y-6">
+
+                <!-- Kartu Rekapitulasi Keseluruhan Sekolah -->
+                <section class="card-bright rounded-3xl p-4 sm:p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <div class="min-w-0">
+                            <h2 class="text-base sm:text-lg font-extrabold text-slate-900">Hasil Rekapitulasi Sekolah</h2>
+                            <p class="text-xs text-slate-500">Terhitung otomatis dari seluruh kelas yang sudah mengisi</p>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-xs font-bold shrink-0">
+                            <span id="statKelasTerisi">0</span><span id="statTotalKelasTarget" class="text-sky-500 font-semibold"> / 24 Kelas</span>
+                        </span>
+                    </div>
+
+                    <!-- 3 Angka Utama Cerah (Pas di Layar HP Kecil & Laptop) -->
+                    <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
+                        <div class="p-2.5 sm:p-4 rounded-2xl bg-sky-50/80 border border-sky-100 text-center min-w-0">
+                            <span class="text-[10px] sm:text-xs font-bold text-sky-800 block truncate">Total Murid</span>
+                            <div id="statTotalSiswa" class="text-lg sm:text-3xl font-extrabold text-sky-950 mt-1">0</div>
+                            <span class="text-[10px] sm:text-xs text-sky-600 font-medium block">Terdata</span>
+                        </div>
+
+                        <div class="p-2.5 sm:p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200/80 text-center min-w-0">
+                            <span class="text-[10px] sm:text-xs font-bold text-emerald-800 block truncate">Punya HP</span>
+                            <div id="statPunyaHp" class="text-lg sm:text-3xl font-extrabold text-emerald-700 mt-1">0</div>
+                            <span id="statPersenPunya" class="inline-block mt-0.5 px-2 py-0.2 rounded-full bg-emerald-100 text-[10px] sm:text-xs font-extrabold text-emerald-800">0%</span>
+                        </div>
+
+                        <div class="p-2.5 sm:p-4 rounded-2xl bg-amber-50/90 border border-amber-200/80 text-center min-w-0">
+                            <span class="text-[10px] sm:text-xs font-bold text-amber-800 block truncate">Tidak Punya</span>
+                            <div id="statTidakPunyaHp" class="text-lg sm:text-3xl font-extrabold text-amber-700 mt-1">0</div>
+                            <span id="statPersenTidak" class="inline-block mt-0.5 px-2 py-0.2 rounded-full bg-amber-100 text-[10px] sm:text-xs font-extrabold text-amber-800">0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Bar Perbandingan Visual -->
+                    <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden flex mb-4">
+                        <div id="barPunyaHp" class="bg-emerald-500 h-full transition-all duration-500" style="width: 0%"></div>
+                        <div id="barTidakPunyaHp" class="bg-amber-400 h-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+
+                    <!-- Rekap Singkat Per Jenjang (Kelas 7, 8, 9) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="jenjangSummaryContainer">
+                        <!-- Diisi otomatis oleh JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Tabel & Kartu Rekapitulasi Per Kelas (Dapat Dilihat Siapa Saja) -->
+                <section class="card-bright rounded-3xl overflow-hidden">
+                    <div class="p-4 sm:p-5 border-b border-slate-100 space-y-3.5">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div class="min-w-0">
+                                <h2 class="text-base sm:text-lg font-extrabold text-slate-900">Data Rekap Per Kelas</h2>
+                                <p class="text-xs text-slate-500">Dapat dilihat oleh semua pengguna • Terkunci otomatis</p>
+                            </div>
+
+                            <!-- Tombol Kelola Kelas, Unduh Excel & Cetak (Hanya muncul saat Admin login) -->
+                            <div id="adminExportActions" class="hidden flex-wrap items-center gap-2 no-print">
+                                <button type="button" onclick="openManageClassesModal()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 text-xs font-bold transition cursor-pointer">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                        <path d="M12 5v14M5 12h14"/>
+                                    </svg>
+                                    <span>Kelola Kelas</span>
+                                </button>
+                                <button type="button" onclick="exportToCSV()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold transition cursor-pointer">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7 10 12 15 17 10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                    <span>Unduh Excel</span>
+                                </button>
+                                <button type="button" onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                        <polyline points="6 9 6 2 18 2 18 9"/>
+                                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                        <rect x="6" y="14" width="12" height="8"/>
+                                    </svg>
+                                    <span>Cetak</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Filter Tingkat & Kolom Pencarian (Pas di Lebar Layar Android) -->
+                        <div class="flex flex-col sm:flex-row gap-2.5 no-print">
+                            <div class="grid grid-cols-4 sm:flex p-1 bg-sky-50 rounded-xl border border-sky-100 shrink-0">
+                                <button type="button" onclick="setGradeFilter('ALL')" data-filter="ALL" class="filter-tab px-2 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs transition cursor-pointer text-center">
+                                    Semua
+                                </button>
+                                <button type="button" onclick="setGradeFilter('7')" data-filter="7" class="filter-tab px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-sky-700 transition cursor-pointer text-center">
+                                    Kelas 7
+                                </button>
+                                <button type="button" onclick="setGradeFilter('8')" data-filter="8" class="filter-tab px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-sky-700 transition cursor-pointer text-center">
+                                    Kelas 8
+                                </button>
+                                <button type="button" onclick="setGradeFilter('9')" data-filter="9" class="filter-tab px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-sky-700 transition cursor-pointer text-center">
+                                    Kelas 9
+                                </button>
+                            </div>
+
+                            <div class="relative flex-1 min-w-0">
+                                <input type="text" id="searchInput" oninput="renderRecapList()" placeholder="Cari kelas atau nama wali kelas..." class="w-full h-10 sm:h-9 pl-9 pr-3 rounded-xl border border-slate-200 bg-slate-50/70 focus:bg-white focus:border-sky-500 text-sm sm:text-xs font-medium text-slate-900 outline-none transition">
+                                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3 sm:top-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tampilan Tablet & Laptop: Tabel Cerah & Bersih -->
+                    <div class="hidden md:block overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-sky-50/60 border-b border-sky-100 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                                    <th class="py-3 px-4">Kelas</th>
+                                    <th class="py-3 px-4">Wali Kelas</th>
+                                    <th class="py-3 px-3 text-center text-emerald-700">Punya HP</th>
+                                    <th class="py-3 px-3 text-center text-amber-700">Tidak Punya</th>
+                                    <th class="py-3 px-3 text-center">Total</th>
+                                    <th class="py-3 px-4 text-right">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recapTableBody" class="divide-y divide-slate-100 text-sm">
+                                <!-- Baris data dirender lewat JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Tampilan Mobile (HP Android): Kartu Cerah Tanpa Geser Samping -->
+                    <div id="recapMobileCards" class="md:hidden divide-y divide-slate-100">
+                        <!-- Kartu mobile dirender lewat JavaScript -->
+                    </div>
+
+                    <!-- State Kosong -->
+                    <div id="emptyRecapState" class="hidden py-10 px-6 text-center">
+                        <h3 class="text-sm font-bold text-slate-800">Belum Ada Data Kelas Masuk</h3>
+                        <p class="text-xs text-slate-500 mt-1">Silakan wali kelas mengisi formulir di atas untuk mulai merekap data.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Cerah Sekolah -->
+    <footer class="bg-white border-t border-sky-100 py-5 px-4 mt-10">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 text-center sm:text-left">
+            <div class="font-semibold text-slate-700">
+                SMP Negeri 6 Manokwari — Sistem Data Kepemilikan Android Murid
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <span>Data terkunci otomatis setelah diinput • Edit khusus Admin</span>
+                <button type="button" onclick="openWelcomeScreen()" class="text-sky-600 hover:text-sky-800 font-bold underline underline-offset-2 cursor-pointer no-print">
+                    Halaman Sambutan
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =====================================================================
+         MODAL 1: LOGIN ADMIN
+    ====================================================================== -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3.5 sm:p-4 bg-slate-900/50 backdrop-blur-xs overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-md w-full max-h-[92dvh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-sky-100 my-auto">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-extrabold text-slate-900">Login Admin Sekolah</h3>
+                        <p class="text-xs text-slate-500">Masukkan kata sandi Admin untuk mengelola &amp; mengunduh data</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg cursor-pointer">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label for="adminPinInput" class="block text-xs font-bold text-slate-800 mb-1.5">Kata Sandi Admin</label>
+                    <input type="password" id="adminPinInput" required placeholder="Masukkan kata sandi Admin..." class="w-full h-12 px-4 rounded-2xl border border-slate-300 focus:border-sky-600 text-base font-bold tracking-wider outline-none">
+                    <p id="adminLoginError" class="hidden text-xs font-semibold text-rose-600 mt-1.5">Kata sandi Admin salah. Silakan coba lagi.</p>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAdminModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold shadow-sm transition cursor-pointer">
+                        Masuk Admin
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 2: EDIT DATA KELAS (KHUSUS ADMIN)
+    ====================================================================== -->
+    <div id="editClassModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3.5 sm:p-4 bg-slate-900/50 backdrop-blur-xs overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-md w-full max-h-[92dvh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-sky-100 my-auto">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <span class="inline-block px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider mb-1">Mode Admin</span>
+                    <h3 class="text-base font-extrabold text-slate-900">Edit Data Kelas <span id="editModalClassTitle" class="text-sky-600"></span></h3>
+                </div>
+                <button type="button" onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg cursor-pointer">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+
+            <form onsubmit="handleAdminUpdateSubmit(event)" class="space-y-4">
+                <input type="hidden" id="editClassCode">
+
+                <div>
+                    <label for="editWaliKelas" class="block text-xs font-bold text-slate-800 mb-1">Nama Wali Kelas</label>
+                    <input type="text" id="editWaliKelas" required class="w-full h-11 px-3.5 rounded-xl border border-slate-300 focus:border-sky-600 text-base font-medium outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="editPunyaHp" class="block text-xs font-bold text-emerald-800 mb-1">Mempunyai HP</label>
+                        <input type="number" id="editPunyaHp" min="0" max="100" required class="w-full h-11 px-3.5 rounded-xl border border-emerald-300 bg-emerald-50/50 text-center text-base font-extrabold text-emerald-700 outline-none">
+                    </div>
+                    <div>
+                        <label for="editTidakPunyaHp" class="block text-xs font-bold text-amber-800 mb-1">Tidak Punya HP</label>
+                        <input type="number" id="editTidakPunyaHp" min="0" max="100" required class="w-full h-11 px-3.5 rounded-xl border border-amber-300 bg-amber-50/50 text-center text-base font-extrabold text-amber-700 outline-none">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold shadow-sm transition cursor-pointer">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 2B: KELOLA DAFTAR KELAS TAMPIL (KHUSUS ADMIN)
+    ====================================================================== -->
+    <div id="manageClassesModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3.5 sm:p-4 bg-slate-900/50 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90dvh] flex flex-col shadow-2xl border border-sky-100 overflow-hidden">
+            <!-- Header Modal -->
+            <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between shrink-0">
+                <div>
+                    <span class="inline-block px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider mb-1">Khusus Admin</span>
+                    <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Kelola Daftar Kelas</h3>
+                    <p class="text-xs text-slate-500">Tambah atau ubah nama kelas yang tampil di pilihan depan</p>
+                </div>
+                <button type="button" onclick="closeManageClassesModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg cursor-pointer">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Form Tambah Kelas Baru -->
+            <form onsubmit="handleAddNewClass(event)" class="p-4 sm:p-5 bg-sky-50/70 border-b border-sky-100 shrink-0">
+                <label for="newClassCodeInput" class="block text-xs font-bold text-slate-800 mb-1.5">Tambah Kelas Baru</label>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="newClassCodeInput" maxlength="20" required placeholder="Contoh: 7I, 8I, 9I..." class="flex-1 h-11 px-3.5 rounded-xl border border-sky-200 bg-white focus:border-sky-600 text-base font-bold text-slate-900 placeholder:font-normal placeholder:text-slate-400 outline-none">
+                    <button type="submit" class="h-11 px-4 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer shrink-0">
+                        + Tambah
+                    </button>
+                </div>
+            </form>
+
+            <!-- Daftar Kelas Aktif (Dapat Diubah & Dihapus Admin) -->
+            <div class="p-4 sm:p-5 overflow-y-auto flex-1 space-y-2" id="manageClassesListContainer">
+                <!-- Dirender otomatis lewat JavaScript -->
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="p-4 border-t border-slate-100 bg-slate-50/60 flex items-center justify-between shrink-0">
+                <span class="text-xs font-semibold text-slate-500">Total: <strong id="manageClassesTotalCount" class="text-slate-800">0</strong> Kelas Aktif</span>
+                <button type="button" onclick="closeManageClassesModal()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition cursor-pointer">
+                    Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 3: KONFIRMASI CUSTOM (PENGGANTI CONFIRM BAWAAN BROWSER)
+    ====================================================================== -->
+    <div id="confirmDialogModal" class="fixed inset-0 z-[60] hidden items-center justify-center p-3.5 sm:p-4 bg-slate-900/50 backdrop-blur-xs overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-sm w-full max-h-[92dvh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-sky-100 my-auto">
+            <h3 id="confirmDialogTitle" class="text-base font-extrabold text-slate-900">Konfirmasi</h3>
+            <p id="confirmDialogMessage" class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed"></p>
+            <div class="flex items-center justify-end gap-2 mt-5">
+                <button type="button" onclick="closeConfirmDialog(false)" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="confirmDialogYesBtn" onclick="closeConfirmDialog(true)" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition cursor-pointer">
+                    Ya, Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFIKASI MENGAMBANG -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 left-5 sm:left-auto sm:w-96 z-50 pointer-events-none space-y-2"></div>
+
+    <!-- =====================================================================
+         LOGIKA APLIKASI & FIREBASE REAL-TIME STORAGE
+    ====================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Daftar Default Rombongan Belajar SMP Negeri 6 Manokwari (Dapat ditambah/diubah oleh Admin)
+        const DEFAULT_CLASS_LIST = [
+            "7A", "7B", "7C", "7D", "7E", "7F", "7G", "7H",
+            "8A", "8B", "8C", "8D", "8E", "8F", "8G", "8H",
+            "9A", "9B", "9C", "9D", "9E", "9F", "9G", "9H"
+        ];
+
+        const ADMIN_PIN = "60400173sekolah"; // Kata Sandi Admin Sekolah (disembunyikan)
+        const LOCAL_RECORDS_KEY = "smpn6_manokwari_records_v1";
+        const LOCAL_CLASSES_KEY = "smpn6_manokwari_classes_v1";
+
+        // State Aplikasi
+        let classList = [...DEFAULT_CLASS_LIST];
+        let classRecordsMap = {};
+        let isAdmin = false;
+        let currentGradeFilter = "ALL";
+        let confirmCallback = null;
+        let editingClassCodeInModal = null;
+
+        // State Firebase
+        let useCloudFirestore = false;
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        const appId = typeof __app_id !== "undefined" ? __app_id : "smpn6-manokwari-android";
+
+        // Konfigurasi Cloud Database (Project: datakepemilikanandroid)
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyCVJlb3Hdsp92nxyOFDK6ODstgq3r1jzyc",
+            authDomain: "datakepemilikanandroid.firebaseapp.com",
+            projectId: "datakepemilikanandroid",
+            storageBucket: "datakepemilikanandroid.firebasestorage.app",
+            messagingSenderId: "48296805210",
+            appId: "1:48296805210:web:72225d9be62f56eb31a963",
+            measurementId: "G-HYXRFGRLJY"
+        };
+
+        // =====================================================================
+        // INISIALISASI PENYIMPANAN (CLOUD FIRESTORE / LOCAL STORAGE FALLBACK)
+        // =====================================================================
+        async function initAppStorage() {
+            loadFromLocalStorage();
+            refreshAllUI();
+
+            try {
+                const app = initializeApp(FIREBASE_CONFIG);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                useCloudFirestore = true;
+
+                await signInAnonymously(auth);
+                currentUser = auth.currentUser;
+
+                onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                });
+
+                if (currentUser) {
+                    updateSyncBadge(true, "Terhubung Cloud");
+                    subscribeToFirestoreData();
+                    return;
+                }
+            } catch (err) {
+                console.warn("Beralih ke penyimpanan lokal browser:", err);
+            }
+
+            useCloudFirestore = false;
+            updateSyncBadge(true, "Tersimpan Lokal");
+            refreshAllUI();
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedClasses = localStorage.getItem(LOCAL_CLASSES_KEY);
+                if (savedClasses) {
+                    const parsedClasses = JSON.parse(savedClasses);
+                    if (Array.isArray(parsedClasses) && parsedClasses.length > 0) {
+                        classList = sortClassCodes(parsedClasses);
+                    }
+                }
+                const savedRecords = localStorage.getItem(LOCAL_RECORDS_KEY);
+                if (savedRecords) {
+                    const parsedRecords = JSON.parse(savedRecords);
+                    if (parsedRecords && typeof parsedRecords === "object") {
+                        classRecordsMap = parsedRecords;
+                    }
+                }
+            } catch (e) {
+                console.error("Gagal memuat data lokal:", e);
+            }
+        }
+
+        function persistToLocalStorage() {
+            try {
+                localStorage.setItem(LOCAL_CLASSES_KEY, JSON.stringify(classList));
+                localStorage.setItem(LOCAL_RECORDS_KEY, JSON.stringify(classRecordsMap));
+            } catch (e) {
+                console.error("Gagal menyimpan ke penyimpanan lokal:", e);
+            }
+        }
+
+        function updateSyncBadge(online, text) {
+            const dot = document.getElementById("syncDot");
+            const label = document.getElementById("syncText");
+            if (label) label.textContent = text;
+            if (dot) {
+                dot.className = online
+                    ? "w-2 h-2 rounded-full bg-emerald-500"
+                    : "w-2 h-2 rounded-full bg-amber-500";
+            }
+        }
+
+        function subscribeToFirestoreData() {
+            if (!currentUser || !db) return;
+
+            const colRef = collection(db, "artifacts", appId, "public", "data", "kepemilikan_hp_smpn6");
+            const classConfigRef = doc(db, "artifacts", appId, "public", "data", "konfigurasi_smpn6", "daftar_kelas");
+
+            // Dengarkan perubahan daftar kelas yang dikelola oleh Admin
+            onSnapshot(classConfigRef, (docSnap) => {
+                if (docSnap.exists() && Array.isArray(docSnap.data().items)) {
+                    classList = sortClassCodes(docSnap.data().items);
+                    persistToLocalStorage();
+                    refreshAllUI();
+                }
+            }, (error) => {
+                console.warn("Membaca daftar kelas lokal:", error);
+            });
+
+            // Dengarkan perubahan data kepemilikan HP tiap kelas secara real-time
+            onSnapshot(colRef, (snapshot) => {
+                const updatedMap = {};
+                snapshot.forEach((docItem) => {
+                    const data = docItem.data();
+                    if (data && data.kelas) {
+                        updatedMap[data.kelas] = data;
+                    }
+                });
+                classRecordsMap = updatedMap;
+                persistToLocalStorage();
+                refreshAllUI();
+            }, (error) => {
+                console.warn("Beralih ke mode penyimpanan lokal:", error);
+                useCloudFirestore = false;
+                updateSyncBadge(true, "Tersimpan Lokal");
+            });
+        }
+
+        // =====================================================================
+        // RENDER & SINKRONISASI ANTARMUKA (UI)
+        // =====================================================================
+        function sortClassCodes(list) {
+            return [...list].sort((a, b) => a.localeCompare(b, "id", { numeric: true }));
+        }
+
+        function refreshAllUI() {
+            populateClassDropdown();
+            handleKelasSelectionChange();
+            updateExecutiveStats();
+            renderJenjangBreakdown();
+            renderRecapList();
+            if (isAdmin && !document.getElementById("manageClassesModal").classList.contains("hidden")) {
+                renderManageClassesList();
+            }
+        }
+
+        function populateClassDropdown() {
+            const select = document.getElementById("selectKelas");
+            if (!select) return;
+            const previousVal = select.value;
+
+            const sortedClasses = sortClassCodes(classList);
+            const groups = [
+                { label: "Kelas VII (7)", items: sortedClasses.filter(c => c.startsWith("7")) },
+                { label: "Kelas VIII (8)", items: sortedClasses.filter(c => c.startsWith("8")) },
+                { label: "Kelas IX (9)", items: sortedClasses.filter(c => c.startsWith("9")) },
+                { label: "Kelas Lainnya", items: sortedClasses.filter(c => !["7", "8", "9"].includes(c.charAt(0))) }
+            ];
+
+            let html = `<option value="">-- Ketuk untuk Memilih Kelas --</option>`;
+            groups.forEach(group => {
+                if (group.items.length === 0) return;
+                html += `<optgroup label="${group.label}">`;
+                group.items.forEach(kode => {
+                    const isFilled = Boolean(classRecordsMap[kode]);
+                    const statusLabel = isFilled ? " ✓ (Sudah Terisi)" : "";
+                    html += `<option value="${escapeHtml(kode)}">Kelas ${escapeHtml(kode)}${statusLabel}</option>`;
+                });
+                html += `</optgroup>`;
+            });
+
+            select.innerHTML = html;
+            if (previousVal && sortedClasses.includes(previousVal)) {
+                select.value = previousVal;
+            }
+        }
+
+        window.handleKelasSelectionChange = function() {
+            const select = document.getElementById("selectKelas");
+            const selectedClass = select.value;
+            const existing = selectedClass ? classRecordsMap[selectedClass] : null;
+
+            const notice = document.getElementById("lockedClassNotice");
+            const waliInput = document.getElementById("inputWaliKelas");
+            const punyaInput = document.getElementById("inputPunyaHp");
+            const tidakInput = document.getElementById("inputTidakPunyaHp");
+            const submitBtn = document.getElementById("submitBtn");
+            const submitBtnText = document.getElementById("submitBtnText");
+
+            if (existing) {
+                waliInput.value = existing.waliKelas || "";
+                punyaInput.value = Number(existing.punyaHp) || 0;
+                tidakInput.value = Number(existing.tidakPunyaHp) || 0;
+
+                if (isAdmin) {
+                    notice.classList.add("hidden");
+                    waliInput.disabled = false;
+                    punyaInput.disabled = false;
+                    tidakInput.disabled = false;
+                    submitBtn.disabled = false;
+                    submitBtnText.textContent = `Perbarui Data Kelas ${selectedClass} (Admin)`;
+                } else {
+                    notice.classList.remove("hidden");
+                    waliInput.disabled = true;
+                    punyaInput.disabled = true;
+                    tidakInput.disabled = true;
+                    submitBtn.disabled = true;
+                    submitBtnText.textContent = `Kelas ${selectedClass} Sudah Terkunci`;
+                }
+            } else {
+                notice.classList.add("hidden");
+                waliInput.disabled = false;
+                punyaInput.disabled = false;
+                tidakInput.disabled = false;
+                submitBtn.disabled = false;
+                submitBtnText.textContent = "Simpan & Rekap Data Kelas";
+            }
+
+            updateLiveFormPreview();
+        };
+
+        window.adjustNumber = function(inputId, delta) {
+            const input = document.getElementById(inputId);
+            if (!input || input.disabled) return;
+            const currentVal = parseInt(input.value, 10) || 0;
+            const nextVal = Math.max(0, Math.min(100, currentVal + delta));
+            input.value = nextVal;
+            updateLiveFormPreview();
+        };
+
+        window.updateLiveFormPreview = function() {
+            const punya = Math.max(0, parseInt(document.getElementById("inputPunyaHp").value, 10) || 0);
+            const tidak = Math.max(0, parseInt(document.getElementById("inputTidakPunyaHp").value, 10) || 0);
+            const total = punya + tidak;
+            const persen = total > 0 ? Math.round((punya / total) * 100) : 0;
+
+            document.getElementById("previewTotalSiswa").textContent = `${total} Siswa`;
+            document.getElementById("previewRasioHp").textContent = `${persen}% Mempunyai HP`;
+        };
+
+        function updateExecutiveStats() {
+            const records = Object.values(classRecordsMap);
+            let totalPunya = 0;
+            let totalTidak = 0;
+
+            records.forEach(item => {
+                totalPunya += Number(item.punyaHp) || 0;
+                totalTidak += Number(item.tidakPunyaHp) || 0;
+            });
+
+            const totalSiswa = totalPunya + totalTidak;
+            const persenPunya = totalSiswa > 0 ? Math.round((totalPunya / totalSiswa) * 100) : 0;
+            const persenTidak = totalSiswa > 0 ? (100 - persenPunya) : 0;
+
+            document.getElementById("statTotalSiswa").textContent = totalSiswa.toLocaleString("id-ID");
+            document.getElementById("statPunyaHp").textContent = totalPunya.toLocaleString("id-ID");
+            document.getElementById("statTidakPunyaHp").textContent = totalTidak.toLocaleString("id-ID");
+            document.getElementById("statPersenPunya").textContent = `${persenPunya}%`;
+            document.getElementById("statPersenTidak").textContent = `${persenTidak}%`;
+
+            document.getElementById("barPunyaHp").style.width = `${persenPunya}%`;
+            document.getElementById("barTidakPunyaHp").style.width = `${persenTidak}%`;
+
+            document.getElementById("statKelasTerisi").textContent = records.length;
+            document.getElementById("statTotalKelasTarget").textContent = ` / ${classList.length} Kelas`;
+        }
+
+        function renderJenjangBreakdown() {
+            const container = document.getElementById("jenjangSummaryContainer");
+            if (!container) return;
+
+            const jenjangList = [
+                { prefix: "7", title: "Kelas VII (7)", badge: "bg-sky-100 text-sky-800" },
+                { prefix: "8", title: "Kelas VIII (8)", badge: "bg-indigo-100 text-indigo-800" },
+                { prefix: "9", title: "Kelas IX (9)", badge: "bg-blue-100 text-blue-800" }
+            ];
+
+            container.innerHTML = jenjangList.map(j => {
+                const matching = Object.values(classRecordsMap).filter(r => String(r.kelas).startsWith(j.prefix));
+                const punya = matching.reduce((sum, r) => sum + (Number(r.punyaHp) || 0), 0);
+                const tidak = matching.reduce((sum, r) => sum + (Number(r.tidakPunyaHp) || 0), 0);
+                const total = punya + tidak;
+
+                return `
+                    <div class="p-3 rounded-2xl bg-slate-50/90 border border-slate-200/80 flex items-center justify-between">
+                        <div>
+                            <span class="inline-block px-2 py-0.5 rounded-md ${j.badge} text-[10px] font-extrabold">${j.title}</span>
+                            <div class="text-xs text-slate-500 mt-1">${matching.length} kelas • <strong>${total}</strong> murid</div>
+                        </div>
+                        <div class="text-right text-xs">
+                            <div class="font-extrabold text-emerald-700">${punya} HP</div>
+                            <div class="font-bold text-amber-700">${tidak} Non-HP</div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        window.setGradeFilter = function(grade) {
+            currentGradeFilter = grade;
+            document.querySelectorAll(".filter-tab").forEach(btn => {
+                const isSelected = btn.getAttribute("data-filter") === grade;
+                btn.className = isSelected
+                    ? "filter-tab px-2 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-2xs transition cursor-pointer text-center"
+                    : "filter-tab px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-sky-700 transition cursor-pointer text-center";
+            });
+            renderRecapList();
+        };
+
+        window.renderRecapList = function() {
+            const tableBody = document.getElementById("recapTableBody");
+            const mobileCards = document.getElementById("recapMobileCards");
+            const emptyState = document.getElementById("emptyRecapState");
+            const searchKeyword = (document.getElementById("searchInput")?.value || "").trim().toLowerCase();
+
+            const allRecords = Object.values(classRecordsMap).sort((a, b) =>
+                String(a.kelas).localeCompare(String(b.kelas), "id", { numeric: true })
+            );
+
+            const filtered = allRecords.filter(item => {
+                const matchGrade = currentGradeFilter === "ALL" || String(item.kelas).startsWith(currentGradeFilter);
+                const matchSearch = !searchKeyword ||
+                    String(item.kelas).toLowerCase().includes(searchKeyword) ||
+                    String(item.waliKelas || "").toLowerCase().includes(searchKeyword);
+                return matchGrade && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                tableBody.innerHTML = "";
+                mobileCards.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+
+            // Render Tabel Desktop & Tablet
+            tableBody.innerHTML = filtered.map(item => {
+                const kode = escapeHtml(item.kelas);
+                const punya = Number(item.punyaHp) || 0;
+                const tidak = Number(item.tidakPunyaHp) || 0;
+                const total = punya + tidak;
+
+                const statusOrActions = isAdmin
+                    ? `<div class="inline-flex items-center justify-end gap-1.5 no-print">
+                            <button type="button" onclick="openEditModal('${kode}')" class="px-2.5 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-bold transition cursor-pointer">Edit</button>
+                            <button type="button" onclick="deleteClassRecord('${kode}')" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold transition cursor-pointer">Hapus</button>
+                       </div>`
+                    : `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-bold">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            Terkunci
+                       </span>`;
+
+                return `
+                    <tr class="hover:bg-sky-50/40 transition">
+                        <td class="py-3 px-4 font-extrabold text-sky-900">Kelas ${kode}</td>
+                        <td class="py-3 px-4 font-semibold text-slate-700">${escapeHtml(item.waliKelas)}</td>
+                        <td class="py-3 px-3 text-center font-extrabold text-emerald-700">${punya}</td>
+                        <td class="py-3 px-3 text-center font-extrabold text-amber-700">${tidak}</td>
+                        <td class="py-3 px-3 text-center font-extrabold text-slate-900">${total}</td>
+                        <td class="py-3 px-4 text-right">${statusOrActions}</td>
+                    </tr>
+                `;
+            }).join("");
+
+            // Render Kartu Mobile (HP Android)
+            mobileCards.innerHTML = filtered.map(item => {
+                const kode = escapeHtml(item.kelas);
+                const punya = Number(item.punyaHp) || 0;
+                const tidak = Number(item.tidakPunyaHp) || 0;
+                const total = punya + tidak;
+
+                const mobileActions = isAdmin
+                    ? `<div class="flex items-center justify-end gap-2 mt-3 pt-2.5 border-t border-slate-100 no-print">
+                            <button type="button" onclick="openEditModal('${kode}')" class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-bold transition cursor-pointer">Edit Data</button>
+                            <button type="button" onclick="deleteClassRecord('${kode}')" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold transition cursor-pointer">Hapus</button>
+                       </div>`
+                    : "";
+
+                return `
+                    <div class="p-3.5 sm:p-4 bg-white">
+                        <div class="flex items-start justify-between gap-2 mb-2.5">
+                            <div class="min-w-0 flex-1">
+                                <span class="inline-block px-2.5 py-0.5 rounded-lg bg-sky-100 text-sky-800 text-xs font-extrabold">Kelas ${kode}</span>
+                                <h4 class="text-sm font-bold text-slate-900 mt-1 break-words">${escapeHtml(item.waliKelas)}</h4>
+                            </div>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold shrink-0">
+                                Terkunci
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5 sm:gap-2 text-center">
+                            <div class="p-2 rounded-xl bg-emerald-50 border border-emerald-100 min-w-0">
+                                <span class="text-[10px] font-bold text-emerald-800 block truncate">Punya HP</span>
+                                <span class="text-base font-extrabold text-emerald-700">${punya}</span>
+                            </div>
+                            <div class="p-2 rounded-xl bg-amber-50 border border-amber-100 min-w-0">
+                                <span class="text-[10px] font-bold text-amber-800 block truncate">Tidak Punya</span>
+                                <span class="text-base font-extrabold text-amber-700">${tidak}</span>
+                            </div>
+                            <div class="p-2 rounded-xl bg-sky-50 border border-sky-100 min-w-0">
+                                <span class="text-[10px] font-bold text-sky-800 block truncate">Total</span>
+                                <span class="text-base font-extrabold text-sky-900">${total}</span>
+                            </div>
+                        </div>
+                        ${mobileActions}
+                    </div>
+                `;
+            }).join("");
+        };
+
+        // =====================================================================
+        // SUBMIT FORMULIR WALI KELAS & PENYIMPANAN DATA
+        // =====================================================================
+        window.handleFormSubmit = function(event) {
+            event.preventDefault();
+            const kelas = document.getElementById("selectKelas").value;
+            const waliKelas = document.getElementById("inputWaliKelas").value.trim();
+            const punyaHp = Math.max(0, parseInt(document.getElementById("inputPunyaHp").value, 10) || 0);
+            const tidakPunyaHp = Math.max(0, parseInt(document.getElementById("inputTidakPunyaHp").value, 10) || 0);
+
+            if (!kelas) {
+                showToast("Silakan pilih kelas Anda terlebih dahulu.", "error");
+                return;
+            }
+            if (!waliKelas) {
+                showToast("Nama Wali Kelas wajib diisi.", "error");
+                return;
+            }
+            if (punyaHp + tidakPunyaHp === 0) {
+                showToast("Jumlah murid tidak boleh 0 seluruhnya.", "error");
+                return;
+            }
+            if (classRecordsMap[kelas] && !isAdmin) {
+                showToast(`Data Kelas ${kelas} sudah terkunci. Hubungi Admin untuk mengubah.`, "error");
+                return;
+            }
+
+            showConfirmDialog(
+                `Simpan Data Kelas ${kelas}?`,
+                `Wali Kelas: ${waliKelas} • Punya HP: ${punyaHp} murid • Tidak Punya HP: ${tidakPunyaHp} murid. Setelah disimpan, data akan otomatis terkunci.`,
+                "Ya, Simpan Data",
+                async () => {
+                    await saveClassRecord({
+                        kelas,
+                        waliKelas,
+                        punyaHp,
+                        tidakPunyaHp,
+                        updatedAt: new Date().toISOString()
+                    });
+
+                    // Reset isian setelah berhasil disimpan
+                    document.getElementById("selectKelas").value = "";
+                    document.getElementById("inputWaliKelas").value = "";
+                    document.getElementById("inputPunyaHp").value = 0;
+                    document.getElementById("inputTidakPunyaHp").value = 0;
+                    refreshAllUI();
+                    showToast(`Data Kelas ${kelas} berhasil disimpan & direkap!`, "success");
+                }
+            );
+        };
+
+        async function saveClassRecord(recordData) {
+            classRecordsMap[recordData.kelas] = recordData;
+            persistToLocalStorage();
+            refreshAllUI();
+
+            if (useCloudFirestore && db && currentUser) {
+                try {
+                    const docRef = doc(db, "artifacts", appId, "public", "data", "kepemilikan_hp_smpn6", recordData.kelas);
+                    await setDoc(docRef, recordData);
+                } catch (err) {
+                    console.warn("Disimpan ke lokal (sinkronisasi cloud tertunda):", err);
+                }
+            }
+        }
+
+        async function saveClassListConfig(newList) {
+            classList = sortClassCodes(newList);
+            persistToLocalStorage();
+            refreshAllUI();
+
+            if (useCloudFirestore && db && currentUser) {
+                try {
+                    const classConfigRef = doc(db, "artifacts", appId, "public", "data", "konfigurasi_smpn6", "daftar_kelas");
+                    await setDoc(classConfigRef, {
+                        items: classList,
+                        updatedAt: new Date().toISOString()
+                    });
+                } catch (err) {
+                    console.warn("Daftar kelas disimpan ke lokal:", err);
+                }
+            }
+        }
+
+        // =====================================================================
+        // HAK AKSES ADMIN (LOGIN, EDIT, HAPUS, KELOLA KELAS, EKSPOR EXCEL)
+        // =====================================================================
+        window.openAdminModal = function() {
+            if (isAdmin) {
+                showToast("Mode Admin sudah aktif.", "success");
+                return;
+            }
+            document.getElementById("adminPinInput").value = "";
+            document.getElementById("adminLoginError").classList.add("hidden");
+            const modal = document.getElementById("adminLoginModal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            setTimeout(() => document.getElementById("adminPinInput").focus(), 100);
+        };
+
+        window.closeAdminModal = function() {
+            const modal = document.getElementById("adminLoginModal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        };
+
+        window.handleAdminLogin = function(event) {
+            event.preventDefault();
+            const pinVal = document.getElementById("adminPinInput").value.trim();
+            if (pinVal === ADMIN_PIN) {
+                isAdmin = true;
+                closeAdminModal();
+                document.getElementById("adminBanner").classList.remove("hidden");
+                document.getElementById("adminExportActions").classList.remove("hidden");
+                document.getElementById("adminExportActions").classList.add("flex");
+                document.getElementById("adminBtnLabel").textContent = "Admin Aktif";
+                refreshAllUI();
+                showToast("Berhasil masuk ke Mode Admin Sekolah.", "success");
+            } else {
+                document.getElementById("adminLoginError").classList.remove("hidden");
+            }
+        };
+
+        window.logoutAdmin = function() {
+            isAdmin = false;
+            editingClassCodeInModal = null;
+            document.getElementById("adminBanner").classList.add("hidden");
+            document.getElementById("adminExportActions").classList.add("hidden");
+            document.getElementById("adminExportActions").classList.remove("flex");
+            document.getElementById("adminBtnLabel").textContent = "Login Admin";
+            refreshAllUI();
+            showToast("Anda telah keluar dari Mode Admin.", "info");
+        };
+
+        // Edit Data Murid Kelas (Khusus Admin)
+        window.openEditModal = function(kode) {
+            if (!isAdmin) return;
+            const item = classRecordsMap[kode];
+            if (!item) return;
+
+            document.getElementById("editClassCode").value = kode;
+            document.getElementById("editModalClassTitle").textContent = kode;
+            document.getElementById("editWaliKelas").value = item.waliKelas || "";
+            document.getElementById("editPunyaHp").value = Number(item.punyaHp) || 0;
+            document.getElementById("editTidakPunyaHp").value = Number(item.tidakPunyaHp) || 0;
+
+            const modal = document.getElementById("editClassModal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        };
+
+        window.closeEditModal = function() {
+            const modal = document.getElementById("editClassModal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        };
+
+        window.handleAdminUpdateSubmit = async function(event) {
+            event.preventDefault();
+            if (!isAdmin) return;
+
+            const kelas = document.getElementById("editClassCode").value;
+            const waliKelas = document.getElementById("editWaliKelas").value.trim();
+            const punyaHp = Math.max(0, parseInt(document.getElementById("editPunyaHp").value, 10) || 0);
+            const tidakPunyaHp = Math.max(0, parseInt(document.getElementById("editTidakPunyaHp").value, 10) || 0);
+
+            if (!waliKelas) {
+                showToast("Nama Wali Kelas wajib diisi.", "error");
+                return;
+            }
+
+            await saveClassRecord({
+                kelas,
+                waliKelas,
+                punyaHp,
+                tidakPunyaHp,
+                updatedAt: new Date().toISOString()
+            });
+
+            closeEditModal();
+            showToast(`Data Kelas ${kelas} berhasil diperbarui.`, "success");
+        };
+
+        window.deleteClassRecord = function(kode) {
+            if (!isAdmin) return;
+            showConfirmDialog(
+                `Hapus Data Kelas ${kode}?`,
+                `Data kepemilikan HP untuk Kelas ${kode} akan dihapus dari rekapitulasi dan kelas ini dapat diisi ulang oleh Wali Kelas.`,
+                "Ya, Hapus Data",
+                async () => {
+                    delete classRecordsMap[kode];
+                    persistToLocalStorage();
+                    refreshAllUI();
+
+                    if (useCloudFirestore && db && currentUser) {
+                        try {
+                            const docRef = doc(db, "artifacts", appId, "public", "data", "kepemilikan_hp_smpn6", kode);
+                            await deleteDoc(docRef);
+                        } catch (err) {
+                            console.warn("Gagal menghapus dari cloud:", err);
+                        }
+                    }
+
+                    showToast(`Data Kelas ${kode} telah dihapus.`, "info");
+                }
+            );
+        };
+
+        // =====================================================================
+        // KELOLA DAFTAR KELAS TAMPIL (TAMBAH & UBAH KELAS — KHUSUS ADMIN)
+        // =====================================================================
+        window.openManageClassesModal = function() {
+            if (!isAdmin) return;
+            editingClassCodeInModal = null;
+            document.getElementById("newClassCodeInput").value = "";
+            renderManageClassesList();
+            const modal = document.getElementById("manageClassesModal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        };
+
+        window.closeManageClassesModal = function() {
+            editingClassCodeInModal = null;
+            const modal = document.getElementById("manageClassesModal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        };
+
+        window.handleAddNewClass = async function(event) {
+            event.preventDefault();
+            if (!isAdmin) return;
+
+            const input = document.getElementById("newClassCodeInput");
+            const rawCode = input.value.trim().toUpperCase().replace(/^KELAS\s+/i, "");
+            if (!rawCode) return;
+
+            if (classList.some(c => c.toUpperCase() === rawCode)) {
+                showToast(`Kelas ${rawCode} sudah ada dalam daftar.`, "error");
+                return;
+            }
+
+            const updated = [...classList, rawCode];
+            await saveClassListConfig(updated);
+            input.value = "";
+            renderManageClassesList();
+            showToast(`Kelas ${rawCode} berhasil ditambahkan ke pilihan depan.`, "success");
+        };
+
+        window.startInlineRenameClass = function(kode) {
+            editingClassCodeInModal = kode;
+            renderManageClassesList();
+        };
+
+        window.cancelInlineRenameClass = function() {
+            editingClassCodeInModal = null;
+            renderManageClassesList();
+        };
+
+        window.saveInlineRenameClass = async function(oldCode) {
+            if (!isAdmin) return;
+            const inputEl = document.getElementById(`renameInput_${oldCode}`);
+            if (!inputEl) return;
+
+            const newCode = inputEl.value.trim().toUpperCase().replace(/^KELAS\s+/i, "");
+            if (!newCode) {
+                showToast("Nama kelas tidak boleh kosong.", "error");
+                return;
+            }
+
+            if (newCode === oldCode) {
+                editingClassCodeInModal = null;
+                renderManageClassesList();
+                return;
+            }
+
+            if (classList.some(c => c.toUpperCase() === newCode)) {
+                showToast(`Nama Kelas ${newCode} sudah digunakan.`, "error");
+                return;
+            }
+
+            // Perbarui daftar kelas
+            const updatedList = classList.map(c => (c === oldCode ? newCode : c));
+
+            // Jika kelas lama sudah memiliki data murid, pindahkan datanya ke kode kelas baru
+            if (classRecordsMap[oldCode]) {
+                const movedRecord = {
+                    ...classRecordsMap[oldCode],
+                    kelas: newCode,
+                    updatedAt: new Date().toISOString()
+                };
+                delete classRecordsMap[oldCode];
+                classRecordsMap[newCode] = movedRecord;
+
+                if (useCloudFirestore && db && currentUser) {
+                    try {
+                        await setDoc(doc(db, "artifacts", appId, "public", "data", "kepemilikan_hp_smpn6", newCode), movedRecord);
+                        await deleteDoc(doc(db, "artifacts", appId, "public", "data", "kepemilikan_hp_smpn6", oldCode));
+                    } catch (err) {
+                        console.warn("Sinkronisasi pemindahan kelas tertunda:", err);
+                    }
+                }
+            }
+
+            editingClassCodeInModal = null;
+            await saveClassListConfig(updatedList);
+            renderManageClassesList();
+            showToast(`Kelas ${oldCode} diubah menjadi Kelas ${newCode}.`, "success");
+        };
+
+        window.deleteClassFromList = function(kode) {
+            if (!isAdmin) return;
+            if (classList.length <= 1) {
+                showToast("Minimal harus tersisa 1 kelas aktif.", "error");
+                return;
+            }
+
+            showConfirmDialog(
+                `Hapus Kelas ${kode} dari Daftar?`,
+                `Kelas ${kode} tidak akan muncul lagi pada pilihan kelas di halaman depan.`,
+                "Ya, Hapus Kelas",
+                async () => {
+                    const updatedList = classList.filter(c => c !== kode);
+                    await saveClassListConfig(updatedList);
+                    renderManageClassesList();
+                    showToast(`Kelas ${kode} dihapus dari daftar pilihan.`, "info");
+                }
+            );
+        };
+
+        function renderManageClassesList() {
+            const container = document.getElementById("manageClassesListContainer");
+            const countLabel = document.getElementById("manageClassesTotalCount");
+            if (!container) return;
+
+            const sorted = sortClassCodes(classList);
+            if (countLabel) countLabel.textContent = sorted.length;
+
+            container.innerHTML = sorted.map(kode => {
+                const safeKode = escapeHtml(kode);
+                const hasData = Boolean(classRecordsMap[kode]);
+
+                if (editingClassCodeInModal === kode) {
+                    return `
+                        <div class="p-2.5 rounded-2xl bg-sky-50 border border-sky-300 flex items-center gap-2">
+                            <input type="text" id="renameInput_${safeKode}" value="${safeKode}" maxlength="20" class="flex-1 h-9 px-3 rounded-xl border border-sky-300 bg-white text-sm font-bold text-slate-900 outline-none">
+                            <button type="button" onclick="saveInlineRenameClass('${safeKode}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">Simpan</button>
+                            <button type="button" onclick="cancelInlineRenameClass()" class="px-2.5 py-1.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold cursor-pointer">Batal</button>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="px-2.5 py-1 rounded-lg bg-white border border-sky-200 text-xs font-extrabold text-sky-900">Kelas ${safeKode}</span>
+                            ${hasData ? `<span class="text-[11px] font-semibold text-emerald-700 truncate">• Sudah terisi data</span>` : `<span class="text-[11px] text-slate-400 truncate">• Belum terisi</span>`}
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button type="button" onclick="startInlineRenameClass('${safeKode}')" class="px-2.5 py-1 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-800 text-xs font-bold transition cursor-pointer">Ubah</button>
+                            <button type="button" onclick="deleteClassFromList('${safeKode}')" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 text-xs font-bold transition cursor-pointer">Hapus</button>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        // =====================================================================
+        // EKSPOR KE EXCEL (CSV) — KHUSUS ADMIN
+        // =====================================================================
+        window.exportToCSV = function() {
+            if (!isAdmin) return;
+            const records = Object.values(classRecordsMap).sort((a, b) =>
+                String(a.kelas).localeCompare(String(b.kelas), "id", { numeric: true })
+            );
+
+            if (records.length === 0) {
+                showToast("Belum ada data kelas yang dapat diunduh.", "error");
+                return;
+            }
+
+            const headers = ["No", "Kelas", "Nama Wali Kelas", "Punya HP Android", "Tidak Punya HP", "Total Murid", "Persentase Punya HP"];
+            const rows = records.map((item, idx) => {
+                const punya = Number(item.punyaHp) || 0;
+                const tidak = Number(item.tidakPunyaHp) || 0;
+                const total = punya + tidak;
+                const persen = total > 0 ? `${Math.round((punya / total) * 100)}%` : "0%";
+                const waliClean = `"${String(item.waliKelas || "").replace(/"/g, '""')}"`;
+                return [idx + 1, `Kelas ${item.kelas}`, waliClean, punya, tidak, total, persen].join(",");
+            });
+
+            const csvContent = "\uFEFF" + [headers.join(","), ...rows].join("\n");
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `Rekap_Kepemilikan_Android_SMPN6_Manokwari_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showToast("File rekap Excel (CSV) berhasil diunduh.", "success");
+        };
+
+        // =====================================================================
+        // NAVIGASI HALAMAN SELAMAT DATANG & UTILITAS DIALOG / TOAST
+        // =====================================================================
+        window.enterMainApp = function() {
+            const welcome = document.getElementById("welcomeScreen");
+            if (!welcome) return;
+            welcome.style.opacity = "0";
+            welcome.style.transform = "scale(1.03)";
+            welcome.style.pointerEvents = "none";
+            setTimeout(() => {
+                welcome.classList.add("hidden");
+            }, 950);
+        };
+
+        window.openWelcomeScreen = function() {
+            const welcome = document.getElementById("welcomeScreen");
+            if (!welcome) return;
+            welcome.classList.remove("hidden");
+            requestAnimationFrame(() => {
+                welcome.style.opacity = "1";
+                welcome.style.transform = "scale(1)";
+                welcome.style.pointerEvents = "auto";
+            });
+        };
+
+        function showConfirmDialog(title, message, yesLabel, onConfirm) {
+            document.getElementById("confirmDialogTitle").textContent = title;
+            document.getElementById("confirmDialogMessage").textContent = message;
+            document.getElementById("confirmDialogYesBtn").textContent = yesLabel || "Ya, Lanjutkan";
+            confirmCallback = onConfirm;
+
+            const modal = document.getElementById("confirmDialogModal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        window.closeConfirmDialog = function(confirmed) {
+            const modal = document.getElementById("confirmDialogModal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            if (confirmed && typeof confirmCallback === "function") {
+                const cb = confirmCallback;
+                confirmCallback = null;
+                cb();
+            } else {
+                confirmCallback = null;
+            }
+        };
+
+        function showToast(message, type = "info") {
+            const container = document.getElementById("toastContainer");
+            if (!container) return;
+
+            const styleMap = {
+                success: "bg-emerald-600 text-white border-emerald-500",
+                error: "bg-rose-600 text-white border-rose-500",
+                info: "bg-slate-900 text-white border-slate-700"
+            };
+
+            const toast = document.createElement("div");
+            toast.className = `pointer-events-auto px-4 py-3 rounded-2xl border shadow-lg text-xs sm:text-sm font-bold transition-all duration-300 ${styleMap[type] || styleMap.info}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                toast.style.transform = "translateY(8px)";
+                setTimeout(() => toast.remove(), 300);
+            }, 3400);
+        }
+
+        function escapeHtml(str) {
+            return String(str ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Jalankan inisialisasi saat halaman siap
+        initAppStorage();
+    </script>
+</body>
+</html>
